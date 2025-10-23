@@ -3,21 +3,27 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/fopina/proxyone/pkg/config"
+	"github.com/fopina/proxyone/pkg/proxy"
 	"github.com/spf13/cobra"
 )
 
 func newRootCmd(version string) *cobra.Command {
 	cmd := &cobra.Command{
-		// TODO: update name
-		Use:   "golang-template",
-		Short: "golang project template demo application",
+		Use:   "proxyone",
+		Short: "A simple HTTP proxy server",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return cmd.Help()
+			cfg, err := config.Load()
+			if err != nil {
+				return fmt.Errorf("failed to load config: %w", err)
+			}
+
+			p := proxy.NewProxy(cfg)
+			return p.Start()
 		},
 	}
 
 	cmd.AddCommand(newVersionCmd(version)) // version subcommand
-	cmd.AddCommand(newExampleCmd())        // example subcommand
 
 	return cmd
 }
