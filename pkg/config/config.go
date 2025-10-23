@@ -9,7 +9,7 @@ import (
 )
 
 type Config struct {
-	UpstreamProxy *url.URL `mapstructure:"upstream_proxy"`
+	UpstreamProxy *url.URL `string:"upstream_proxy"`
 	NoProxy       []string `mapstructure:"no_proxy"`
 	ListenAddr    string   `mapstructure:"listen_addr"`
 }
