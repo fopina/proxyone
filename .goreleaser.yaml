@@ -3,14 +3,10 @@ version: 2
 before:
   hooks:
     - go mod tidy
-    # TODO: you may remove this if you don't need go generate
-    - go generate ./...
 
 builds:
   - env:
       - CGO_ENABLED=0
-    # TODO: customize binary name if not the same as repository
-    # binary: golang-template
     ldflags: -s -w -X main.version={{ .Version }}
     goos:
       - linux
@@ -41,7 +37,6 @@ changelog:
       - "^docs:"
       - "^test:"
 
-# TODO: make sure {{.ProjectName}} is the right github repository
 dockers:
 - image_templates:
   - 'ghcr.io/fopina/{{.ProjectName}}:{{ .Tag }}-amd64'
